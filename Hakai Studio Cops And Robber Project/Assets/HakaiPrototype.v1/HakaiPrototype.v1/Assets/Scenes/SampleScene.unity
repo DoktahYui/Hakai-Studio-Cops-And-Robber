@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 310272185}
   - component: {fileID: 310272184}
   - component: {fileID: 310272183}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Light Grey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1504,7 +1504,7 @@ MonoBehaviour:
   groundDectector: {fileID: 1701934459}
   layerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 64
   isGrounded: 0
   maxJumpTime: 0.2
   sprintSpeed: 6
