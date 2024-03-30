@@ -44,13 +44,13 @@ public class PlayerController : MonoBehaviour
     //private int jumpCount;
 
     [Header("Sprint Feature")]
-    public float sprintSpeed = 6f;
-    public float walkSpeed;
+    [SerializeField] private float sprintSpeed = 6f;
+    [SerializeField] private float walkSpeed;
 
     [Header("Air Acceleration Modifiers")]
-    public float defaultAccel = 1; // Default 1
-    public float lightAccel = 0.8f; // Proper strafe
-    public float heavyAccel = 0.3f; // Restricted strafe
+    [SerializeField] private float defaultAccel = 1; // Default 1
+    [SerializeField] private float lightAccel = 0.8f; // Proper strafe
+    [SerializeField] private float heavyAccel = 0.3f; // Restricted strafe
     private float currentAccel = 1f;
     private bool breakLightAccel;
 

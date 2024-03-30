@@ -2417,9 +2417,6 @@ MonoBehaviour:
   returnSpeed: 50
   range: 50
   fireRate: 1
-  maxAmmo: 0
-  currentAmmo: 0
-  reloadTime: 0
   shoot: {fileID: 1824832664}
 --- !u!114 &8971814268336858391
 MonoBehaviour:

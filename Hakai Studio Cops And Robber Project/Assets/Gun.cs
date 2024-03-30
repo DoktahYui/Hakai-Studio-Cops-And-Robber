@@ -20,9 +20,9 @@ public class Gun : MonoBehaviour
     public float range;
     public float fireRate;
 
-    public int maxAmmo;
-    public int currentAmmo;
-    public float reloadTime;
+    //public int maxAmmo;
+    //public int currentAmmo;
+    //public float reloadTime;
 
     private float nextTimeToFire = 0f;
 

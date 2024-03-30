@@ -5,7 +5,7 @@ using UnityEngine;
 public class Recoil : MonoBehaviour
 {
     //public WeaponSwitcherScript weaponSwitcher;
-    public Gun[] gun = new Gun[3];
+    [SerializeField] private Gun[] gun = new Gun[3];
     public int selectWeapon;
 
     private Vector3 currentRotation;

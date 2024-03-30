@@ -11,7 +11,7 @@ public class Shooting : MonoBehaviour
     public Recoil recoil;
     private WeaponRecoil weaponRecoil;
     private WeaponSwitcherScript weaponSwitcher;
-    public Gun[] gun = new Gun[3];
+    [SerializeField] private Gun[] gun = new Gun[3];
     public int selectWeapon;
     public float radius = 20f;
 
