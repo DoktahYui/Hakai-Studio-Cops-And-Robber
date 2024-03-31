@@ -17,8 +17,8 @@ public class Recoil : MonoBehaviour
 
     void Update()
     {
-        targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, gun[selectWeapon].returnSpeed * Time.deltaTime);
-        currentRotation = Vector3.Lerp(currentRotation, targetRotation, gun[selectWeapon].snappiness* Time.deltaTime);
+        targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, gun[selectWeapon].ReturnSpeed * Time.deltaTime);
+        currentRotation = Vector3.Lerp(currentRotation, targetRotation, gun[selectWeapon].Snappiness* Time.deltaTime);
         transform.localRotation = Quaternion.Euler(currentRotation);
     }
 
@@ -33,6 +33,6 @@ public class Recoil : MonoBehaviour
         //    targetRotation += new Vector3(gun[selectWeapon].recoilX, Random.Range(-gun[selectWeapon].recoilY, gun[selectWeapon].recoilY), Random.Range(-gun[selectWeapon].recoilZ, gun[selectWeapon].recoilZ));
         //}
 
-        targetRotation += new Vector3(gun[selectWeapon].recoilX, Random.Range(-gun[selectWeapon].recoilY, gun[selectWeapon].recoilY), Random.Range(-gun[selectWeapon].recoilZ, gun[selectWeapon].recoilZ));
+        targetRotation += new Vector3(gun[selectWeapon].RecoilX, Random.Range(-gun[selectWeapon].RecoilY, gun[selectWeapon].RecoilY), Random.Range(-gun[selectWeapon].RecoilZ, gun[selectWeapon].RecoilZ));
     }
 }

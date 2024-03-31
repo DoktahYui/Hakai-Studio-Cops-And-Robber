@@ -101,17 +101,37 @@ public class Shooting : MonoBehaviour
         float time = 0;
         Vector3 startPosition = trail.transform.position;
 
-        while (time < 1)
+        while (time < TimeCheck(trail, hit))
         {
             trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
             time += Time.deltaTime / trail.time;
 
             yield return null;
         }
+        Debug.Log(time);
 
         trail.transform.position = hit.point;
+        CheckEnemy(hit);
         Instantiate(ImpactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
 
         Destroy(trail.gameObject, trail.time);
+    }
+
+    private float TimeCheck(TrailRenderer trail, RaycastHit hit)
+    {
+        float speed = 50f;
+        float distance = Vector3.Distance(trail.transform.position, hit.point);
+
+        return distance / speed;
+
+    }
+
+    private void CheckEnemy(RaycastHit hit)
+    {
+        if (hit.collider.CompareTag("Enemy"))
+        {
+            TakeDamageScript takeDamage = hit.collider.GetComponent<TakeDamageScript>();
+            takeDamage.TakeDamage(10);
+        }
     }
 }

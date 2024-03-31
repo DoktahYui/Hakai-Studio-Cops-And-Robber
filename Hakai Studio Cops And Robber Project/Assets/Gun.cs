@@ -5,21 +5,33 @@ using UnityEngine.UI;
 
 public class Gun : MonoBehaviour
 {
-    [SerializeField] public float recoilX;
-    [SerializeField] public float recoilY;
-    [SerializeField] public float recoilZ;
+    // private variables
+    [SerializeField] private float recoilX;
+    [SerializeField] private float recoilY;
+    [SerializeField] private float recoilZ;
 
-    [SerializeField] public float aimrecoilX;
-    [SerializeField] public float aimrecoilY;
-    [SerializeField] public float aimrecoilZ;
+    [SerializeField] private float aimRecoilX;
+    [SerializeField] private float aimRecoilY;
+    [SerializeField] private float aimRecoilZ;
 
-    [SerializeField] public float snappiness;
-    [SerializeField] public float returnSpeed;
+    [SerializeField] private float snappiness;
+    [SerializeField] private float returnSpeed;
 
-    //public int damage;
-    public float range;
-    public float fireRate;
+    [SerializeField] private int damage;
+    [SerializeField] private float range;
+    [SerializeField] private float fireRate;
 
+    //public variables
+    public float RecoilX { get { return recoilX; } }
+    public float RecoilY { get { return recoilY; } }
+    public float RecoilZ { get { return recoilZ; } }
+
+    public float AimRecoilX { get { return aimRecoilX; } }
+    public float AimRecoilY { get { return aimRecoilY; } }
+    public float AimRecoilZ { get { return aimRecoilZ; } }
+
+    public float Snappiness { get { return snappiness; } }
+    public float ReturnSpeed { get { return returnSpeed; } }
     //public int maxAmmo;
     //public int currentAmmo;
     //public float reloadTime;
@@ -34,8 +46,8 @@ public class Gun : MonoBehaviour
     {
         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
         {
-            nextTimeToFire = Time.time + 1f / fireRate;
             shoot.Shoot(range);
+            nextTimeToFire = Time.time + 1f / fireRate;
         }
     }
 }
