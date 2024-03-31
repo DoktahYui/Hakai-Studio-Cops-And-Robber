@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravity = 25f;
     private Vector3 temp;
     private Vector3 gravityVel;
+    [SerializeField] private bool isMoving = false;
+    public bool IsMoving { get { return isMoving; } }
     [SerializeField] private float playerSpeed = 5f;
     [SerializeField] private float jumpForce = 15f;
 
@@ -72,6 +74,7 @@ public class PlayerController : MonoBehaviour
     {
         if (freeze) return;
 
+        CheckMoving();
         if (enableGravity) Gravity();
         if (enableMove) Movement();
         if (enableSprint) Sprint();
@@ -93,6 +96,7 @@ public class PlayerController : MonoBehaviour
         // Gravity
         if (!isGrounded)
         {
+            isJumping = true;
             gravityVel += gravity * -player.up * Time.deltaTime;
         }
         //else
@@ -130,6 +134,22 @@ public class PlayerController : MonoBehaviour
         if (inputX < 0)
         {
             temp += -player.right;
+        }
+    }
+
+    private void CheckMoving() 
+    {
+        float inputX = Input.GetAxisRaw("Horizontal");
+        float inputZ = Input.GetAxisRaw("Vertical");
+
+        if (inputZ > 0 || inputZ < 0 || inputX > 0 || inputX < 0 || isJumping)
+        {
+            isMoving = true;
+        }
+
+        else
+        {
+            isMoving = false;
         }
     }
 

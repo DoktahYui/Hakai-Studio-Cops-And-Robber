@@ -19,7 +19,13 @@ public class Shooting : MonoBehaviour
     private bool bulletSpread = true;
 
     [SerializeField]
-    private Vector3 BulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
+    private Vector3 maxBulletSpreadvariance = new Vector3(0.1f, 0.1f, 0.1f);
+
+    [SerializeField]
+    private Vector3 minBulletSpreadvariance = new Vector3(0.01f, 0.01f, 0.01f);
+
+    [SerializeField]
+    private Vector3 currentBulletSpreadVariance;
 
     [SerializeField]
     private ParticleSystem shootingSystem;
@@ -33,11 +39,17 @@ public class Shooting : MonoBehaviour
     [SerializeField]
     private TrailRenderer bulletTrail;
 
+    [SerializeField]
+    private PlayerController playerController;
+
     void Start()
     {
         weaponSwitcher = this.gameObject.GetComponent<WeaponSwitcherScript>();
         recoil = GameObject.Find("CameraRot/CameraRecoil").GetComponent<Recoil>();
         weaponRecoil = transform.GetChild(0).GetComponent<WeaponRecoil>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+        currentBulletSpreadVariance = minBulletSpreadvariance;
     }
 
     void Update()
@@ -59,6 +71,29 @@ public class Shooting : MonoBehaviour
                 selectWeapon = 2;
             }
         }
+
+        AdjustSpread();
+    }
+
+    private void AdjustSpread()
+    {
+        if (playerController.IsMoving)
+        {
+            currentBulletSpreadVariance.x += 0.5f * Time.deltaTime;
+            currentBulletSpreadVariance.y += 0.5f * Time.deltaTime;
+            currentBulletSpreadVariance.z += 0.5f * Time.deltaTime;
+        }
+
+        else
+        {
+            currentBulletSpreadVariance.x -= 0.5f * Time.deltaTime;
+            currentBulletSpreadVariance.y -= 0.5f * Time.deltaTime;
+            currentBulletSpreadVariance.z -= 0.5f * Time.deltaTime;
+        }
+
+        currentBulletSpreadVariance.x = Mathf.Clamp(currentBulletSpreadVariance.x, minBulletSpreadvariance.x, maxBulletSpreadvariance.x);
+        currentBulletSpreadVariance.y = Mathf.Clamp(currentBulletSpreadVariance.y, minBulletSpreadvariance.y, maxBulletSpreadvariance.y);
+        currentBulletSpreadVariance.z = Mathf.Clamp(currentBulletSpreadVariance.z, minBulletSpreadvariance.z, maxBulletSpreadvariance.z);
     }
 
     public void Shoot(float range)
@@ -85,9 +120,9 @@ public class Shooting : MonoBehaviour
         {
             direction += new Vector3
                 (
-                  Random.Range(-BulletSpreadVariance.x, BulletSpreadVariance.x),
-                  Random.Range(-BulletSpreadVariance.y, BulletSpreadVariance.y),
-                  Random.Range(-BulletSpreadVariance.z, BulletSpreadVariance.z)
+                  Random.Range(-currentBulletSpreadVariance.x, currentBulletSpreadVariance.x),
+                  Random.Range(-currentBulletSpreadVariance.y, currentBulletSpreadVariance.y),
+                  Random.Range(-currentBulletSpreadVariance.z, currentBulletSpreadVariance.z)
                 );
 
             direction.Normalize();
