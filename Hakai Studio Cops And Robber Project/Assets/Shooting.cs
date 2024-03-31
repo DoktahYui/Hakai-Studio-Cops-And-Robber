@@ -69,7 +69,7 @@ public class Shooting : MonoBehaviour
         shootingSystem.Play();
         Vector3 direction = GetDirection();
 
-        if (Physics.Raycast(gunMuzzle.position, direction, out RaycastHit hit, range))
+        if (Physics.Raycast(fpsCam.transform.position, direction, out RaycastHit hit, range))
         {
             TrailRenderer trail = Instantiate(bulletTrail, gunMuzzle.transform.position, Quaternion.identity);
 
