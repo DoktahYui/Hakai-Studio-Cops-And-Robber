@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
     private void Gravity()
     {
         // Ground Check
-        isGrounded = Physics.CheckSphere(groundDectector.position, 0.1f, layerMask);
+        isGrounded = Physics.CheckSphere(groundDectector.position, 0.2f, layerMask);
 
         // Reset variables on land
         if (isGrounded)
