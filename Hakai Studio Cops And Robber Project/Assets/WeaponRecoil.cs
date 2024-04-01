@@ -21,7 +21,7 @@ public class WeaponRecoil : MonoBehaviour
 
     private void Start()
     {
-        weaponRotation = new Vector3(-90f, 180f, 10f);
+        weaponRotation = gameObject.transform.position;
     }
 
     void Update()
