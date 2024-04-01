@@ -275,3 +275,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
+
+//sfx needed
+//walking
+//running
+//jumping
+//crouching
+//sliding
+//gunshot 
+//reloading
+//melee attack
+//knock down 

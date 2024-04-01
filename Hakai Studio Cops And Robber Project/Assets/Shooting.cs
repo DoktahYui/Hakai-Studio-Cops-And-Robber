@@ -9,7 +9,7 @@ public class Shooting : MonoBehaviour
 {
     public Camera fpsCam;
     public Recoil recoil;
-    private WeaponRecoil weaponRecoil;
+    [SerializeField] private WeaponRecoil weaponRecoil;
     private WeaponSwitcherScript weaponSwitcher;
     [SerializeField] private Gun[] gun = new Gun[3];
     public int selectWeapon;
