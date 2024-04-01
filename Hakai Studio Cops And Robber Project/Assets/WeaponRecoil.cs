@@ -15,18 +15,13 @@ public class WeaponRecoil : MonoBehaviour
     [SerializeField] public float snappiness;
     [SerializeField] public float returnSpeed;
 
-    private Vector3 weaponRotation;
     private Vector3 currentRotation;
     private Vector3 targetRotation;
 
-    private void Start()
-    {
-        weaponRotation = gameObject.transform.position;
-    }
 
     void Update()
     {
-        targetRotation = Vector3.Lerp(targetRotation, weaponRotation, returnSpeed * Time.deltaTime);
+        targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
         currentRotation = Vector3.Lerp(currentRotation, targetRotation, snappiness * Time.deltaTime);
         transform.localRotation = Quaternion.Euler(currentRotation);
     }

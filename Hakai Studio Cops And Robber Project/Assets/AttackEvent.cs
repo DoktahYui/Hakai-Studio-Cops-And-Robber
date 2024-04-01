@@ -15,17 +15,17 @@ public class AttackEvent : MonoBehaviour
         knife = gameObject.GetComponentInParent<Knife>();
     }
 
-    public void StartAttack()
+    private void StartAttack()
     {
         animator.SetBool("HasAttack", true);
     }
 
-    public void EndAttack()
+    private void EndAttack()
     {
         animator.SetBool("HasAttack", false);
     }
 
-    public void Attack()
+    private void Attack()
     {
         bc.enabled = true;
         StartCoroutine(AttackDuration());

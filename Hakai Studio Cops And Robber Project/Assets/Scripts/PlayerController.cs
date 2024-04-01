@@ -163,6 +163,7 @@ public class PlayerController : MonoBehaviour
         player.Rotate(0f, mouseInput.x, 0f);
         Camera.main.transform.localRotation = Quaternion.Euler(mouseInput.y, 0f, 0f);
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Sprint()
