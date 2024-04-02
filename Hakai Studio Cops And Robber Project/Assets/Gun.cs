@@ -44,7 +44,7 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
+        if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire)
         {
             shoot.Shoot(range);
             nextTimeToFire = Time.time + 1f / fireRate;
