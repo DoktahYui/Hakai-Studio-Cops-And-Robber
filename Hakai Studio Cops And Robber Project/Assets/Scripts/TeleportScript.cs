@@ -23,7 +23,7 @@ public class TeleportScript : MonoBehaviour
     void Update()
     {
         
-        if (playerController.teleportCooldown >= 0) playerController.teleportCooldown -= Time.deltaTime;
+        if (playerController.teleportCooldown > 0) playerController.teleportCooldown -= Time.deltaTime;
     }
 
     // Teleporter
@@ -35,7 +35,8 @@ public class TeleportScript : MonoBehaviour
             {
                 playerController.teleportCooldown = playerController.teleportDelay;
                 playerRelativePos = player.position - teleporter.position;
-                player.position = teleportTarget.position + playerRelativePos;
+                playerRelativePos = new Vector3(-playerRelativePos.x, playerRelativePos.y, playerRelativePos.z);
+                player.position = teleportTarget.position - playerRelativePos;
                 player.rotation = teleportTarget.rotation;
             }
         }
