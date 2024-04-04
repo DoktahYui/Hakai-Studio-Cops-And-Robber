@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool enableAirAccel = false;
     [SerializeField] private bool enableJump = true;
     [SerializeField] private bool enableJumpTime = false;
+    [SerializeField] private bool enableStepSlope = true;
 
     [Header("Movement Mechanics")]
     [SerializeField] private float gravity = 25f;
@@ -25,19 +26,23 @@ public class PlayerController : MonoBehaviour
     private Vector3 gravityVel;
     [SerializeField] private bool isMoving = false;
     public bool IsMoving { get { return isMoving; } }
-    [SerializeField] private float playerSpeed = 5f;
+    [SerializeField] private float playerSpeed; // Overall move speed
+    [SerializeField] private float diagonalSpeed = Mathf.Sqrt(50f); // [walkSpeed / sqrt(walkSpeed * walkSpeed x 2) * walkSpeed]
     [SerializeField] private float jumpForce = 15f;
 
-    [Header("Mouse Mechanics")]
-    private Vector2 mouseInput = Vector2.zero;
-    [SerializeField] private float clampUp = -70f;
-    [SerializeField] private float clampDown = 30f;
-    [SerializeField] private float mouseSensitivity = 1f;
+    [Header("Step Slope Mechanics")]
+    [SerializeField] private Transform stepRayUpper;
+    [SerializeField] private Transform stepRayLower;
+    [SerializeField] private float stepWidth = 1.2f;
+    [SerializeField] private float stepHeight = 0.6f;
+    [SerializeField] private float stepSmooth = 0.05f;
 
     [Header("Jump Mechanics")]
     [SerializeField] private Transform groundDectector; // *Required, "Base/Feet"
     [SerializeField] private LayerMask layerMask; // Standable Layer
     [SerializeField] private bool isGrounded;
+    [SerializeField] private float groundDelay = 0.2f;
+    private float groundCooldown = 0f;
     private bool isJumping;
     [SerializeField] private float maxJumpTime = 0.2f;
     private float jumpTime;
@@ -46,8 +51,8 @@ public class PlayerController : MonoBehaviour
     //private int jumpCount;
 
     [Header("Sprint Feature")]
-    [SerializeField] private float sprintSpeed = 6f;
-    [SerializeField] private float walkSpeed;
+    [SerializeField] private float sprintMultiplier = 6f;
+    [SerializeField] private float walkSpeed = 5f;
 
     [Header("Air Acceleration Modifiers")]
     [SerializeField] private float defaultAccel = 1; // Default 1
@@ -56,13 +61,19 @@ public class PlayerController : MonoBehaviour
     private float currentAccel = 1f;
     private bool breakLightAccel;
 
+    [Header("Mouse Mechanics")]
+    private Vector2 mouseInput = Vector2.zero;
+    [SerializeField] private float clampUp = -70f;
+    [SerializeField] private float clampDown = 30f;
+    [SerializeField] private float mouseSensitivity = 1f;
+
     [Header("Teleport Features")]
-    public float teleportDelay = 0.5f;
+    public float teleportDelay = 1f;
     public float teleportCooldown = 0f;
 
     private void Awake()
     {
-        Initalize();
+        Initialize();
     }
 
     private void Start()
@@ -80,12 +91,25 @@ public class PlayerController : MonoBehaviour
         if (enableSprint) Sprint();
         if (enableJump) Jump();
         if (enableCameraLook) CameraLook();
+        if (enableStepSlope) StepSlope();
+    }
+
+    private void FixedUpdate()
+    {
+        
     }
 
     private void Gravity()
     {
         // Ground Check
-        isGrounded = Physics.CheckSphere(groundDectector.position, 0.2f, layerMask);
+        if (groundCooldown <= 0f)
+        {
+            isGrounded = Physics.CheckSphere(groundDectector.position, 0.1f, layerMask);
+        }
+        else if (groundCooldown >= 0f)
+        {
+            groundCooldown -= Time.deltaTime;
+        }
 
         // Reset variables on land
         if (isGrounded)
@@ -99,12 +123,12 @@ public class PlayerController : MonoBehaviour
             isJumping = true;
             gravityVel += gravity * -player.up * Time.deltaTime;
         }
-        //else
-        //{
-        //    gravityVel = Vector3.zero;
-        //}
+        else
+        {
+            gravityVel = Vector3.zero;//(gravity / 5) * -player.up;
+        }
 
-        Vector3 velocity = temp * playerSpeed * currentAccel;
+        Vector3 velocity = temp * playerSpeed * sprintMultiplier * currentAccel;
 
         rb_player.velocity = velocity + (gravityVel);
     }
@@ -134,6 +158,58 @@ public class PlayerController : MonoBehaviour
         if (inputX < 0)
         {
             temp += -player.right;
+        }
+
+        if (inputX != 0 && inputZ != 0)
+        {
+            diagonalSpeed = (walkSpeed / Mathf.Sqrt(walkSpeed * walkSpeed * 2)) * walkSpeed;
+            playerSpeed = diagonalSpeed;
+        }
+        else
+        {
+            playerSpeed = walkSpeed;
+        }
+    }
+
+    private void StepSlope()
+    {
+        if (isMoving)
+        {
+            Vector3 moveDir = new Vector3(rb_player.velocity.x, 0f, rb_player.velocity.z).normalized;          
+
+            RaycastHit hitLower;
+            if (Physics.Raycast(stepRayLower.position, moveDir, out hitLower, 0.55f))
+            {
+                RaycastHit hitUpper;
+                if (!Physics.Raycast(stepRayUpper.position, moveDir, out hitUpper, stepWidth))
+                {
+                    rb_player.position -= new Vector3(0f, -stepSmooth, 0f);
+                }
+            }
+
+            Vector3 moveDir45 = moveDir + new Vector3(1.5f, 0f, 0f).normalized;
+
+            RaycastHit hitLower45;
+            if (Physics.Raycast(stepRayLower.position, moveDir45, out hitLower45, 0.6f))
+            {
+                RaycastHit hitUpper45;
+                if (!Physics.Raycast(stepRayUpper.position, moveDir45, out hitUpper45, stepWidth + 0.1f))
+                {
+                    rb_player.position -= new Vector3(0f, -stepSmooth, 0f);
+                }
+            }
+
+            Vector3 moveDirMinus45 = moveDir - new Vector3(1.5f, 0f, 0f).normalized;
+
+            RaycastHit hitLowerMinus45;
+            if (Physics.Raycast(stepRayLower.position, moveDirMinus45, out hitLowerMinus45, 0.6f))
+            {
+                RaycastHit hitUpperMinus45;
+                if (!Physics.Raycast(stepRayUpper.position, moveDirMinus45, out hitUpperMinus45, stepWidth + 0.1f))
+                {
+                    rb_player.position -= new Vector3(0f, -stepSmooth, 0f);
+                }
+            }
         }
     }
 
@@ -173,11 +249,11 @@ public class PlayerController : MonoBehaviour
         {
             if (isGrounded && Input.GetKey(KeyCode.LeftShift))
             {
-                playerSpeed = sprintSpeed;
+                sprintMultiplier = 1.3f;
             }
             else
             {
-                playerSpeed = walkSpeed;
+                sprintMultiplier = 1f;
             }
         }
     }
@@ -208,9 +284,10 @@ public class PlayerController : MonoBehaviour
 
             else if (isGrounded && Input.GetKeyDown(KeyCode.Space))
             {
+                isGrounded = false;
+                groundCooldown = groundDelay;
                 gravityVel += player.up * jumpForce;
             }
-
         }
     }
 
@@ -245,10 +322,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Initalize()
+    private void Initialize()
     {
         player = this.gameObject.transform;
         rb_player = this.gameObject.GetComponent<Rigidbody>();
+        stepRayUpper.localPosition = new Vector3(stepRayUpper.position.x, stepHeight, stepRayUpper.position.z);
     }
 
     private void CheckDeclare()
@@ -271,8 +349,13 @@ public class PlayerController : MonoBehaviour
         if (enableSprint)
         {
             enableMove = true;
-            sprintSpeed = playerSpeed * 1.3f;
-            walkSpeed = playerSpeed;
+            sprintMultiplier = 1.3f;
+        }
+
+        if (enableMove)
+        {
+            playerSpeed = walkSpeed;
+            diagonalSpeed = (walkSpeed / Mathf.Sqrt(walkSpeed * walkSpeed * 2)) * walkSpeed;
         }
     }
 }
