@@ -84,7 +84,7 @@ public class PlayerController : NetworkBehaviour
 
     void Update()
     {
-        if (!IsOwner) return;
+        if (!IsHost) return;
  
         if (freeze) return;
 
@@ -327,8 +327,8 @@ public class PlayerController : NetworkBehaviour
 
     private void Initialize()
     {
-        player = this.gameObject.transform;
-        rb_player = this.gameObject.GetComponent<Rigidbody>();
+        player = gameObject.transform;
+        rb_player = gameObject.GetComponent<Rigidbody>();
         stepRayUpper.localPosition = new Vector3(stepRayUpper.position.x, stepHeight, stepRayUpper.position.z);
     }
 
