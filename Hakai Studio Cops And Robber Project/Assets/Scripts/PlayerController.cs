@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     [SerializeField] private Transform player;
     [SerializeField] private Rigidbody rb_player;
@@ -83,6 +84,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!IsOwner) return;
+ 
         if (freeze) return;
 
         CheckMoving();
