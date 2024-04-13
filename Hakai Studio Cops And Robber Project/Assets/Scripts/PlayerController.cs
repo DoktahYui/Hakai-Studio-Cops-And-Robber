@@ -84,7 +84,7 @@ public class PlayerController : NetworkBehaviour
 
     void Update()
     {
-        if (!IsHost) return;
+        if (!IsOwner) return;
  
         if (freeze) return;
 
