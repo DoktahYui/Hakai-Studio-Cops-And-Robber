@@ -683,7 +683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fpsCam: {fileID: 7961407372992896706}
   recoil: {fileID: 8672549668624452074}
-  weaponRecoil: {fileID: 0}
+  weaponRecoil: {fileID: 3162681076975757933}
   gun:
   - {fileID: 5241698629303209758}
   selectWeapon: 0
