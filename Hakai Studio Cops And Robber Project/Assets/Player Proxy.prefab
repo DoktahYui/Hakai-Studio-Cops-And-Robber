@@ -490,7 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 73729996
+  GlobalObjectIdHash: 3803765075
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -666,6 +666,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e266de78a340543a08f56e8610e0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canClimb: 1
+  isClimbing: 0
+  playerCamera: {fileID: 7961407372992896706}
+  checkClimbMultiple: 1.5
+  climbLengthMultiple: 3
+  playerController: {fileID: 0}
   topPosition: {fileID: 8763309584263048455}
   bottomPosition: {fileID: 1789361928875999097}
   leftPosition: {fileID: 4777018935306680174}
@@ -780,7 +786,7 @@ MonoBehaviour:
   gunMuzzle: {fileID: 6870702308428601281}
   ImpactParticleSystem: {fileID: 8875028554600089392, guid: 17f99a0aa32d344489cb9e904dbb3e1a, type: 3}
   bulletTrail: {fileID: 4961406663800786037, guid: cad067762891b5c44a6e27813956175c, type: 3}
-  playerController: {fileID: 0}
+  playerController: {fileID: 4678548189751872011}
 --- !u!1 &4777018935306680174
 GameObject:
   m_ObjectHideFlags: 0
