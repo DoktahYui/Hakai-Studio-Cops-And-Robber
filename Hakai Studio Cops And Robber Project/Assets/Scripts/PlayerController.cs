@@ -13,11 +13,11 @@ public class PlayerController : NetworkBehaviour
     [Header("Enabled Mechanics")]
     [SerializeField] private bool freeze = false;
     [SerializeField] private bool enableGravity = true;
-    [SerializeField] private bool enableMove = true;
+    [SerializeField] private bool enableMove = true; public bool EnableMove { set {  enableMove = value; } }
     [SerializeField] private bool enableCameraLook = true;
     [SerializeField] private bool enableSprint = true;
     [SerializeField] private bool enableAirAccel = false;
-    [SerializeField] private bool enableJump = true;
+    [SerializeField] private bool enableJump = true; public bool EnableJump { set { enableJump = value; } }
     [SerializeField] private bool enableJumpTime = false;
     [SerializeField] private bool enableStepSlope = true;
 

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Shooting : MonoBehaviour
+public class Shooting : NetworkBehaviour
 {
     public Camera fpsCam;
     public Recoil recoil;
@@ -44,10 +45,11 @@ public class Shooting : MonoBehaviour
 
     void Start()
     {
-        weaponSwitcher = this.gameObject.GetComponent<WeaponSwitcherScript>();
-        recoil = GameObject.Find("CameraRot/CameraRecoil").GetComponent<Recoil>();
-        weaponRecoil = transform.GetChild(0).GetComponent<WeaponRecoil>();
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        if (IsLocalPlayer)
+        {
+            weaponSwitcher = this.gameObject.GetComponent<WeaponSwitcherScript>();
+            weaponRecoil = transform.GetChild(0).GetComponent<WeaponRecoil>();
+        }
 
         currentBulletSpreadVariance = minBulletSpreadvariance;
     }
