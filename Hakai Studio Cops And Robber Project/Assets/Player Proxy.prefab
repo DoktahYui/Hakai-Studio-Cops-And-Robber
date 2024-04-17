@@ -672,10 +672,10 @@ MonoBehaviour:
   checkClimbMultiple: 1.5
   climbLengthMultiple: 3
   playerController: {fileID: 0}
-  topPosition: {fileID: 8763309584263048455}
-  bottomPosition: {fileID: 1789361928875999097}
-  leftPosition: {fileID: 4777018935306680174}
-  rightPosition: {fileID: 7901003782719960137}
+  topPosition: {fileID: 8220678857022257569}
+  bottomPosition: {fileID: 9094491492681485445}
+  leftPosition: {fileID: 4198118682385151707}
+  rightPosition: {fileID: 1248238290538387267}
 --- !u!1 &2899883272102612426
 GameObject:
   m_ObjectHideFlags: 0

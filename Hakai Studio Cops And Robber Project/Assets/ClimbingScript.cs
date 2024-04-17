@@ -22,10 +22,10 @@ public class ClimbingScript : MonoBehaviour
 
     private RaycastHit hit;
 
-    [SerializeField] private GameObject topPosition;
-    [SerializeField] private GameObject bottomPosition;
-    [SerializeField] private GameObject leftPosition;
-    [SerializeField] private GameObject rightPosition;
+    [SerializeField] private Transform topPosition;
+    [SerializeField] private Transform bottomPosition;
+    [SerializeField] private Transform leftPosition;
+    [SerializeField] private Transform rightPosition;
 
     private Vector3 topDir;
     private Vector3 bottomDir;
@@ -70,11 +70,36 @@ public class ClimbingScript : MonoBehaviour
     void StartClimb()
     {
         isClimbing = true;
+        playerController.EnableMove = false;
+    }
+
+    void EndClimb()
+    {
+        isClimbing = false;
+        playerController.EnableMove = true;
     }
 
     void Climbing()
     {
+        float inputX = Input.GetAxisRaw("Horizontal");
+        float inputZ = Input.GetAxisRaw("Vertical");
 
+        //if (inputZ > 0)
+        //{
+        //    transform. += 10f;
+        //}
+        //if (inputZ < 0)
+        //{
+        //    temp += -player.forward;
+        //}
+        //if (inputX > 0)
+        //{
+        //    temp += player.right;
+        //}
+        //if (inputX < 0)
+        //{
+        //    temp += -player.right;
+        //}
     }
 
     void CheckWallSurrounding()
