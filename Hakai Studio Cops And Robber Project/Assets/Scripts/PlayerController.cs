@@ -12,7 +12,7 @@ public class PlayerController : NetworkBehaviour
 
     [Header("Enabled Mechanics")]
     [SerializeField] private bool freeze = false;
-    [SerializeField] private bool enableGravity = true;
+    [SerializeField] private bool enableGravity = true; public bool EnableGravity { set { enableGravity = value; } }
     [SerializeField] private bool enableMove = true; public bool EnableMove { set {  enableMove = value; } }
     [SerializeField] private bool enableCameraLook = true;
     [SerializeField] private bool enableSprint = true;

@@ -8,10 +8,12 @@ public class ClimbingScript : MonoBehaviour
     [SerializeField] private bool isClimbing;
     [SerializeField] private Camera playerCamera;
 
+    [SerializeField] private float climbForce;
     [SerializeField] private float checkClimbMultiple;
     [SerializeField] private float climbLengthMultiple;
 
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private Rigidbody rb;
 
     private Ray wallRay;
     private Ray forwardRay;
@@ -35,6 +37,7 @@ public class ClimbingScript : MonoBehaviour
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -71,12 +74,14 @@ public class ClimbingScript : MonoBehaviour
     {
         isClimbing = true;
         playerController.EnableMove = false;
+        playerController.EnableGravity = false;
     }
 
     void EndClimb()
     {
         isClimbing = false;
         playerController.EnableMove = true;
+        playerController.EnableGravity = false;
     }
 
     void Climbing()
@@ -84,22 +89,23 @@ public class ClimbingScript : MonoBehaviour
         float inputX = Input.GetAxisRaw("Horizontal");
         float inputZ = Input.GetAxisRaw("Vertical");
 
-        //if (inputZ > 0)
-        //{
-        //    transform. += 10f;
-        //}
-        //if (inputZ < 0)
-        //{
-        //    temp += -player.forward;
-        //}
-        //if (inputX > 0)
-        //{
-        //    temp += player.right;
-        //}
-        //if (inputX < 0)
-        //{
-        //    temp += -player.right;
-        //}
+        if (inputZ > 0)
+        {
+            transform.Translate(0f, 1f * climbForce * Time.deltaTime, 0f);
+            //rb.AddForce(transform.up * climbForce * Time.deltaTime, ForceMode.Acceleration);
+        }
+        if (inputZ < 0)
+        {
+            transform.Translate(0f, -1f * climbForce * Time.deltaTime, 0f);
+        }
+        if (inputX > 0)
+        {
+            transform.Translate(1f * climbForce * Time.deltaTime, 0f, 0f);
+        }
+        if (inputX < 0)
+        {
+            transform.Translate(-1f * climbForce * Time.deltaTime, 0f, 0f);
+        }
     }
 
     void CheckWallSurrounding()

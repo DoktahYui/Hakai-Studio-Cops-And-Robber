@@ -669,9 +669,11 @@ MonoBehaviour:
   canClimb: 1
   isClimbing: 0
   playerCamera: {fileID: 7961407372992896706}
+  climbForce: 5
   checkClimbMultiple: 1.5
   climbLengthMultiple: 3
   playerController: {fileID: 0}
+  rb: {fileID: 0}
   topPosition: {fileID: 8220678857022257569}
   bottomPosition: {fileID: 9094491492681485445}
   leftPosition: {fileID: 4198118682385151707}
