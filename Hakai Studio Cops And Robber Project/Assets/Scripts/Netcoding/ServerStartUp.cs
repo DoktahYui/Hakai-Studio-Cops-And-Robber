@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
+using Unity.Services.Multiplay;
+using Unity.Services.Core;
 using UnityEngine;
+using System;
 
 public class ServerStartUp : MonoBehaviour
 {
     private const string _internalServerIP = "0.0.0.0";
     private ushort _serverPort = 7777;
+
+    private IMultiplayService _multiplayService;
 
     void Start()
     {
@@ -34,5 +40,19 @@ public class ServerStartUp : MonoBehaviour
     {
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(_internalServerIP, _serverPort);
         NetworkManager.Singleton.StartServer();
+    }
+
+    async Task StartServerServices()
+    {
+        await UnityServices.InitializeAsync();
+        try
+        {
+            _multiplayService = MultiplayService.Instance;
+            //await _multiplayService.StartServerQueryHandlerAsync();
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 }
