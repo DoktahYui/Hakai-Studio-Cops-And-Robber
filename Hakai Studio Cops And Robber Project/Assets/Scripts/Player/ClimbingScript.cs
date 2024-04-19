@@ -43,7 +43,7 @@ public class ClimbingScript : MonoBehaviour
     private void Update()
     {
         if (canClimb && !isClimbing) CheckWall();
-        if (isClimbing) CheckWallSurrounding(); Climbing();
+        if (isClimbing) { CheckWallSurrounding(); Climbing(); }
     }
 
     void CheckWall()
