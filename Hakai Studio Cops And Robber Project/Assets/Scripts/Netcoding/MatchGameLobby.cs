@@ -61,7 +61,7 @@ public class MatchGameLobby : MonoBehaviour
             multiplayEventCallbacks.SubscriptionStateChanged += MultiplayEventCallbacks_SubscriptionStateChanged;
             IServerEvents serverEvents = await MultiplayService.Instance.SubscribeToServerEventsAsync(multiplayEventCallbacks);
 
-            serverQueryHandler = await MultiplayService.Instance.StartServerQueryHandlerAsync(3, "MyServerName", "UnrankMatch", "0", "default");
+            serverQueryHandler = await MultiplayService.Instance.StartServerQueryHandlerAsync(6, "MyServerName", "UnrankMatch", "0", "default");
 
             var serverConfig = MultiplayService.Instance.ServerConfig;
             if (serverConfig.AllocationId != "")
@@ -144,7 +144,7 @@ public class MatchGameLobby : MonoBehaviour
         SetupBackfillTickets();
 
         MatchGameMultiplayer.Instance.StartServer();
-        Loader.LoadNetwork(Loader.Scene.GameScene);
+        Loader.LoadNetwork(Loader.Scene.MatchScene);
 
     }
 

@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class MatchGameMultiplayer : MonoBehaviour
 {
-    public const int MAX_PLAYER_AMOUNT = 3;
+    public const int MAX_PLAYER_AMOUNT = 6;
     private const string PLAYER_PREFS_PLAYER_NAMEMULTIPLAYER = "PlayerNameMultiplayer";
 
     public static MatchGameMultiplayer Instance { get; private set; }
