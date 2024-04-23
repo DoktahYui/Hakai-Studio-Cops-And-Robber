@@ -18,7 +18,7 @@ public class FindMatchUI : MonoBehaviour
     private float pollTicketTimer;
     private float pollTicketTimerMax = 1.1f;
 
-    [SerializeField] private Transform lookingForMatchTransform;
+    //[SerializeField] private Transform lookingForMatchTransform;
 
     [SerializeField] private Button findMatchButton;
     [SerializeField] private Button backButton;
@@ -31,7 +31,7 @@ public class FindMatchUI : MonoBehaviour
     {
         findMatchButton.onClick.AddListener(() =>
         {
-            lookingForMatchTransform.gameObject.SetActive(false);
+            //lookingForMatchTransform.gameObject.SetActive(false);
 
             if (!isFindingMatch)
             {
@@ -56,7 +56,7 @@ public class FindMatchUI : MonoBehaviour
     {
         Debug.Log("FindMatch");
 
-        lookingForMatchTransform.gameObject.SetActive(true);
+        //lookingForMatchTransform.gameObject.SetActive(true);
 
         createTicketResponse = await MatchmakerService.Instance.CreateTicketAsync(new List<Unity.Services.Matchmaker.Models.Player>
         {
@@ -124,12 +124,12 @@ public class FindMatchUI : MonoBehaviour
                 case MultiplayAssignment.StatusOptions.Failed:
                     createTicketResponse = null;
                     Debug.Log("Failed to create Multiplay Server!");
-                    lookingForMatchTransform.gameObject.SetActive(false);
+                    //lookingForMatchTransform.gameObject.SetActive(false);
                     break;
                 case MultiplayAssignment.StatusOptions.Timeout:
                     createTicketResponse = null;
                     Debug.Log("Multiplay Timeout!");
-                    lookingForMatchTransform.gameObject.SetActive(false);
+                    //lookingForMatchTransform.gameObject.SetActive(false);
                     break;
             }
         }
