@@ -23,6 +23,7 @@ public class MatchGameLobby : MonoBehaviour
     private string backfillTicketId;
     private float acceptBackfillTicketsTimer;
     private float acceptBackfillTicketsTimerMax = 1.1f;
+    private PayloadAllocation payloadAllocation;
 
 
 #endif
@@ -81,6 +82,22 @@ public class MatchGameLobby : MonoBehaviour
             }
 #endif
         }
+    }
+
+    private async void KitchenGameMultiplayer_OnPlayerDataNetworkListChanged(object sender, EventArgs e)
+    {
+#if DEDICATED_SERVER
+        HandleUpdateBackfillTickets();
+
+        if (MatchGameMultiplayer.Instance.HasAvailablePlayerSlots())
+        {
+            await MultiplayService.Instance.ReadyServerForPlayersAsync();
+        }
+        else
+        {
+            await MultiplayService.Instance.UnreadyServerAsync();
+        }
+#endif
     }
 
 #if DEDICATED_SERVER
@@ -145,20 +162,29 @@ public class MatchGameLobby : MonoBehaviour
     {
         if (backfillTicketId != null && payloadAllocation != null && MatchGameMultiplayer.Instance.HasAvailablePlayerSlots())
         {
-            Debug.Log("handleUpdatebackfillTickets");
-            PayloadAllocation payloadAllocation = await MultiplayService.Instance.GetPayloadAllocationFromJsonAs<PayloadAllocation>();
+            Debug.Log("HandleUpdateBackfillTickets");
 
-            string payLoad = await MultiplayService.Instance.GetPayloadAllocationAsPlainText();
-            Debug.Log(payLoad);
+            List<Unity.Services.Matchmaker.Models.Player> playerList = new List<Unity.Services.Matchmaker.Models.Player>();
 
-            Debug.Log("############");
+            foreach (PlayerData playerData in MatchGameMultiplayer.Instance.GetPlayerDataNetworkList())
+            {
+                playerList.Add(new Unity.Services.Matchmaker.Models.Player(playerData.playerId.ToString()));
+            }
+
+            MatchProperties matchProperties = new MatchProperties(
+                payloadAllocation.MatchProperties.Teams,
+                playerList,
+                payloadAllocation.MatchProperties.Region,
+                payloadAllocation.MatchProperties.BackfillTicketId
+            );
 
             try
             {
                 await MatchmakerService.Instance.UpdateBackfillTicketAsync(payloadAllocation.BackfillTicketId,
-                    new BackfillTicket(backfillTicketId, properties: new BackfillTicketProperties(payloadAllocation.MatchProperties))
-                    );
-            } catch (MatchmakerServiceException e)
+                    new BackfillTicket(backfillTicketId, properties: new BackfillTicketProperties(matchProperties))
+                );
+            }
+            catch (MatchmakerServiceException e)
             {
                 Debug.Log("Error: " + e);
             }

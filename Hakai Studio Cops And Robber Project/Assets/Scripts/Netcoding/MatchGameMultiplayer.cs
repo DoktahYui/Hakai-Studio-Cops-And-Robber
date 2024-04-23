@@ -58,6 +58,11 @@ public class MatchGameMultiplayer : MonoBehaviour
         NetworkManager.Singleton.StartHost();
     }
 
+    public bool HasAvailablePlayerSlots()
+    {
+        return NetworkManager.Singleton.ConnectedClientsIds.Count < MAX_PLAYER_AMOUNT;
+    }
+
     private void NetworkManager_Server_OnClientDisconnectCallback(ulong clientId)
     {
         for (int i = 0; i < playerDataNetworkList.Count; i++)
@@ -81,24 +86,24 @@ public class MatchGameMultiplayer : MonoBehaviour
         SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
     }
 
-    //private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
-    //{
-    //    if (SceneManager.GetActiveScene().name != Loader.Scene.CharacterSelectScene.ToString())
-    //    {
-    //        connectionApprovalResponse.Approved = false;
-    //        connectionApprovalResponse.Reason = "Game has already started";
-    //        return;
-    //    }
+    private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
+    {
+        if (SceneManager.GetActiveScene().name != Loader.Scene.CharacterSelectScene.ToString())
+        {
+            connectionApprovalResponse.Approved = false;
+            connectionApprovalResponse.Reason = "Game has already started";
+            return;
+        }
 
-    //    if (NetworkManager.Singleton.ConnectedClientsIds.Count >= MAX_PLAYER_AMOUNT)
-    //    {
-    //        connectionApprovalResponse.Approved = false;
-    //        connectionApprovalResponse.Reason = "Game is full";
-    //        return;
-    //    }
+        if (NetworkManager.Singleton.ConnectedClientsIds.Count >= MAX_PLAYER_AMOUNT)
+        {
+            connectionApprovalResponse.Approved = false;
+            connectionApprovalResponse.Reason = "Game is full";
+            return;
+        }
 
-    //    connectionApprovalResponse.Approved = true;
-    //}
+        connectionApprovalResponse.Approved = true;
+    }
 
     public void StartClient()
     {
@@ -107,6 +112,14 @@ public class MatchGameMultiplayer : MonoBehaviour
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
         NetworkManager.Singleton.StartClient();
+    }
+
+    public void StartServer()
+    {
+        NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
+        NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
+        NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
+        NetworkManager.Singleton.StartServer();
     }
 
     private void NetworkManager_Client_OnClientConnectedCallback(ulong clientId)
@@ -137,6 +150,11 @@ public class MatchGameMultiplayer : MonoBehaviour
         playerData.playerId = playerId;
 
         playerDataNetworkList[playerDataIndex] = playerData;
+    }
+
+    public NetworkList<PlayerData> GetPlayerDataNetworkList()
+    {
+        return playerDataNetworkList;
     }
 
     private void NetworkManager_Client_OnClientDisconnectCallback(ulong clientId)
