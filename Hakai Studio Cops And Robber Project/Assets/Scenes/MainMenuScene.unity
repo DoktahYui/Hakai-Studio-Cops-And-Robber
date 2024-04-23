@@ -736,7 +736,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217e5c5f89d57a849835ad1e03688856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookingForMatchTransform: {fileID: 0}
   findMatchButton: {fileID: 2012534961}
   backButton: {fileID: 252383908}
   mainMenu: {fileID: 81278248}
@@ -919,6 +918,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 456481539}
   m_CullTransparentMesh: 1
+--- !u!1 &808371151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 808371153}
+  - component: {fileID: 808371152}
+  m_Layer: 0
+  m_Name: MainMenuDedicatedServer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &808371152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808371151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42538f3c5c4d414eb846b7366f246b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &808371153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808371151}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1065.4581, y: 413.3159, z: -6.7657304}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &982378410
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,3 +1847,4 @@ SceneRoots:
   - {fileID: 1813704147}
   - {fileID: 1177105621}
   - {fileID: 343036939}
+  - {fileID: 808371153}

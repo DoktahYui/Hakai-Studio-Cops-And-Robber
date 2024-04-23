@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public class FindMatchUI : MonoBehaviour
 {
-    public const string DEFAULT_QUEUE = "unrank-queue";
+    public const string DEFAULT_QUEUE = "unrank-match";
 
     private CreateTicketResponse createTicketResponse;
     private float pollTicketTimer;
