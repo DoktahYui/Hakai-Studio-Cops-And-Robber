@@ -309,7 +309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playButton: {fileID: 233983922}
   quitButton: {fileID: 982378412}
-  findMatchGameObject: {fileID: 0}
+  findMatchGameObject: {fileID: 330487437}
 --- !u!1 &233983920
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,9 +737,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookingForMatchTransform: {fileID: 0}
-  findMatchButton: {fileID: 0}
-  backButton: {fileID: 0}
-  mainMenu: {fileID: 0}
+  findMatchButton: {fileID: 2012534961}
+  backButton: {fileID: 252383908}
+  mainMenu: {fileID: 81278248}
   isFindingMatch: 0
 --- !u!1 &343036938
 GameObject:
@@ -1577,7 +1577,7 @@ MonoBehaviour:
     EnableNetworkLogs: 1
     OldPrefabList: []
   RunInBackground: 1
-  LogLevel: 1
+  LogLevel: 0
 --- !u!1 &2012534959
 GameObject:
   m_ObjectHideFlags: 0
