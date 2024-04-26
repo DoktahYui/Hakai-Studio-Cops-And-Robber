@@ -37,6 +37,11 @@ public class MatchGameLobby : MonoBehaviour
         InitalizeUnityAuthentication();
     }
 
+    //private void Start()
+    //{
+    //    MatchGameMultiplayer.Instance.OnPlayerDataNetworkListChanged += MatchGameMultiplayer_OnPlayerDataNetworkListChanged;
+    //}
+
     private async void InitalizeUnityAuthentication()
     {
         if (UnityServices.State != ServicesInitializationState.Initialized)
@@ -84,7 +89,7 @@ public class MatchGameLobby : MonoBehaviour
         }
     }
 
-    private async void KitchenGameMultiplayer_OnPlayerDataNetworkListChanged(object sender, EventArgs e)
+    private async void MatchGameMultiplayer_OnPlayerDataNetworkListChanged(object sender, EventArgs e)
     {
 #if DEDICATED_SERVER
         HandleUpdateBackfillTickets();

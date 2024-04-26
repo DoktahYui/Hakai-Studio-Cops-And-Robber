@@ -5,7 +5,7 @@ using Unity.Netcode;
 using Unity.Services.Multiplay;
 using UnityEngine;
 
-public class PlayerReady : NetworkBehaviour
+public class PlayerReady : MonoBehaviour
 {
     public static event EventHandler OnInstanceCreated;
 

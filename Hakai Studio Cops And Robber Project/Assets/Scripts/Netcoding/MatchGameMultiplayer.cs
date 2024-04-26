@@ -49,6 +49,21 @@ public class MatchGameMultiplayer : MonoBehaviour
         OnPlayerDataNetworkListChanged?.Invoke(this, EventArgs.Empty);
     }
 
+    private void NetworkManager_OnClientConnectedCallback(ulong clientId)
+    {
+        Debug.Log("Client Connected " + " " + clientId);
+
+        playerDataNetworkList.Add(new PlayerData
+        {
+            clientId = clientId,
+        });
+
+#if !DEDICATED_SERVER
+        SetPlayerNameServerRpc(GetPlayerName());
+        SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
+#endif
+    }
+
     public void StartHost()
     {
         //NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
@@ -73,16 +88,6 @@ public class MatchGameMultiplayer : MonoBehaviour
                 playerDataNetworkList.RemoveAt(i);
             }
         }
-    }
-
-    private void NetworkManager_OnClientConnectedCallback(ulong clientId)
-    {
-        playerDataNetworkList.Add(new PlayerData
-        {
-            clientId = clientId,
-        });
-        //SetPlayerNameServerRpc(GetPlayerName());
-        SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
     }
 
     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)

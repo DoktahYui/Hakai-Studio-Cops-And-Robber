@@ -7,7 +7,7 @@ public class MainMenuDedicatedServer : MonoBehaviour
     private void Start()
     {
 #if DEDICATED_SERVER
-        Loader.Load(Loader.Scene.MainMenuScene);
+        Loader.Load(Loader.Scene.MatchScene);
 #endif 
     }
 }
