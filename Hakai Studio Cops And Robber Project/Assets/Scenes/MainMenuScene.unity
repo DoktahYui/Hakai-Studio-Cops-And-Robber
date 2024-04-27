@@ -978,7 +978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &808371152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1270,6 +1270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1177105621}
+  - component: {fileID: 1177105623}
   - component: {fileID: 1177105622}
   m_Layer: 0
   m_Name: MatchGameMultiplayer
@@ -1305,6 +1306,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f51da83aa9d05c43943d75aaec5bc72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1177105623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177105620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3261985024
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &1201459246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,7 +1665,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1813704148}
-    PlayerPrefab: {fileID: 0}
+    PlayerPrefab: {fileID: 1842110121854823886, guid: 5e86abca60f76a948a04e13fde763b56, type: 3}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: 27741d23dc703e64f9fe4b5bd5ac903a, type: 2}

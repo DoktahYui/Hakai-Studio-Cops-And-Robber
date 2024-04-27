@@ -6,7 +6,7 @@ using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MatchGameMultiplayer : MonoBehaviour
+public class MatchGameMultiplayer : NetworkBehaviour
 {
     public const int MAX_PLAYER_AMOUNT = 6;
     private const string PLAYER_PREFS_PLAYER_NAMEMULTIPLAYER = "PlayerNameMultiplayer";
@@ -92,19 +92,19 @@ public class MatchGameMultiplayer : MonoBehaviour
 
     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
     {
-        if (SceneManager.GetActiveScene().name == Loader.Scene.MatchScene.ToString())
-        {
-            connectionApprovalResponse.Approved = false;
-            connectionApprovalResponse.Reason = "Game has already started";
-            return;
-        }
+        //if (SceneManager.GetActiveScene().name == Loader.Scene.MatchScene.ToString())
+        //{
+        //    connectionApprovalResponse.Approved = false;
+        //    connectionApprovalResponse.Reason = "Game has already started";
+        //    return;
+        //}
 
-        if (NetworkManager.Singleton.ConnectedClientsIds.Count >= MAX_PLAYER_AMOUNT)
-        {
-            connectionApprovalResponse.Approved = false;
-            connectionApprovalResponse.Reason = "Game is full";
-            return;
-        }
+        //if (NetworkManager.Singleton.ConnectedClientsIds.Count >= MAX_PLAYER_AMOUNT)
+        //{
+        //    connectionApprovalResponse.Approved = false;
+        //    connectionApprovalResponse.Reason = "Game is full";
+        //    return;
+        //}
 
         connectionApprovalResponse.Approved = true;
     }
