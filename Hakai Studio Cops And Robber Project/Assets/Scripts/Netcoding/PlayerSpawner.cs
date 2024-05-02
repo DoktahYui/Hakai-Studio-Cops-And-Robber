@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerSpawner : NetworkBehaviour
 {
-    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private NetworkObject playerPrefab;
 
     public override void OnNetworkSpawn()
     {
@@ -20,8 +20,9 @@ public class PlayerSpawner : NetworkBehaviour
     {
         foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
         {
-            GameObject player = Instantiate(playerPrefab);
-            player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+            var networkObject = NetworkManager.SpawnManager.InstantiateAndSpawn(playerPrefab, clientId, true, true);
+            //GameObject player = Instantiate(playerPrefab);
+            //player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
         }
     }
 }
