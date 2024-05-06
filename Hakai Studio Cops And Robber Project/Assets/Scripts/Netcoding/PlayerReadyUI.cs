@@ -11,12 +11,9 @@ public class PlayerReadyUI : NetworkBehaviour
 
     public void Awake()
     {
-        if (IsLocalPlayer)
+        readyButton.onClick.AddListener(() =>
         {
-            readyButton.onClick.AddListener(() =>
-            {
                 PlayerReadyManager.Instance.SetPlayerReady();
-            });
-        }
+        });
     }
 }
