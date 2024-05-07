@@ -13,6 +13,7 @@ public static class Loader
         MainMenuScene,
         MatchScene,
         LoadingScene,
+        WaitingScene,
     }
 
 
