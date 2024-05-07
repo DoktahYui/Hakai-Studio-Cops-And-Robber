@@ -149,7 +149,7 @@ public class MatchGameLobby : MonoBehaviour
         SetupBackfillTickets();
 
         MatchGameMultiplayer.Instance.StartServer();
-        Loader.LoadNetwork(Loader.Scene.WaitingScene);
+        Loader.LoadNetwork(Loader.Scene.MatchScene);
 
     }
 
