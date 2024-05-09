@@ -86,7 +86,11 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-  
+        var data = new NetworkInputData();
+
+        Movement(data.temp, data.diagonalSpeed, data.walkSpeed, data.playerSpeed);
+
+        input.Set(data);
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
@@ -157,5 +161,39 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
     {
 
+    }
+
+    public void Movement(Vector3 temp, float diagonalSpeed, float walkSpeed, float playerSpeed)
+    {
+        float inputX = Input.GetAxisRaw("Horizontal");
+        float inputZ = Input.GetAxisRaw("Vertical");
+
+        temp = Vector3.zero;
+        if (inputZ > 0)
+        {
+            temp += Vector3.forward;
+        }
+        if (inputZ < 0)
+        {
+            temp += -Vector3.forward;
+        }
+        if (inputX > 0)
+        {
+            temp += Vector3.right;
+        }
+        if (inputX < 0)
+        {
+            temp += -Vector3.right;
+        }
+
+        if (inputX != 0 && inputZ != 0)
+        {
+            diagonalSpeed = (walkSpeed / Mathf.Sqrt(walkSpeed * walkSpeed * 2)) * walkSpeed;
+            playerSpeed = diagonalSpeed;
+        }
+        else
+        {
+            playerSpeed = walkSpeed;
+        }
     }
 }

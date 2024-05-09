@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 2610704529838152261}
   - component: {fileID: 4243569788374855452}
   - component: {fileID: 5152249170159269707}
+  - component: {fileID: 3150727131192409305}
   m_Layer: 0
   m_Name: Player Proxy
   m_TagString: Player
@@ -629,6 +630,57 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1842110121854823886}
   m_Enabled: 1
+--- !u!114 &3150727131192409305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842110121854823886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b72c51ba47e885b4da5ffb8595ef1254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 3762681182105076270}
+  rb_player: {fileID: 7208754281418527233}
+  platform: {fileID: 0}
+  freeze: 0
+  enableGravity: 1
+  enableMove: 1
+  enableCameraLook: 1
+  enableSprint: 1
+  enableAirAccel: 0
+  enableJump: 1
+  enableJumpTime: 0
+  enableStepSlope: 1
+  gravity: 25
+  isMoving: 0
+  playerSpeed: 0
+  diagonalSpeed: 7.071068
+  jumpForce: 15
+  stepRayUpper: {fileID: 0}
+  stepRayLower: {fileID: 0}
+  stepWidth: 1.2
+  stepHeight: 0.6
+  stepSmooth: 0.05
+  groundDectector: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  isGrounded: 0
+  groundDelay: 0.2
+  maxJumpTime: 0.2
+  sprintMultiplier: 6
+  walkSpeed: 5
+  defaultAccel: 1
+  lightAccel: 0.8
+  heavyAccel: 0.3
+  clampUp: -70
+  clampDown: 30
+  mouseSensitivity: 1
+  teleportDelay: 1
+  teleportCooldown: 0
 --- !u!1 &2899883272102612426
 GameObject:
   m_ObjectHideFlags: 0
