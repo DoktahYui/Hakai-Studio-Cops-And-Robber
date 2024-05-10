@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
+using Fusion;
 using UnityEditor;
 using UnityEngine;
 
@@ -82,10 +82,26 @@ public class PlayerController : NetworkBehaviour
         CheckDeclare();
     }
 
-    void Update()
-    {
-        if (!IsOwner) return;
+    //void Update()
+    //{
+    //    if (!HasStateAuthority) return;
  
+    //    if (freeze) return;
+
+    //    CheckMoving();
+    //    if (enableGravity) Gravity();
+    //    if (enableMove) Movement();
+    //    if (enableSprint) Sprint();
+    //    if (enableJump) Jump();
+    //    if (enableCameraLook) CameraLook();
+    //    if (enableStepSlope) StepSlope();
+    //}
+
+    public override void FixedUpdateNetwork()
+    {
+        if (!HasStateAuthority) { Debug.Log($"This {Runner.LocalPlayer} does not have authority!"); return; }
+        if (!HasInputAuthority) { Debug.Log($"This {Runner.LocalPlayer} does not have input authority!"); return;}
+
         if (freeze) return;
 
         CheckMoving();
@@ -97,11 +113,6 @@ public class PlayerController : NetworkBehaviour
         if (enableStepSlope) StepSlope();
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
-
     private void Gravity()
     {
         // Ground Check
@@ -111,7 +122,7 @@ public class PlayerController : NetworkBehaviour
         }
         else if (groundCooldown >= 0f)
         {
-            groundCooldown -= Time.deltaTime;
+            groundCooldown -= Runner.DeltaTime;
         }
 
         // Reset variables on land
@@ -124,7 +135,7 @@ public class PlayerController : NetworkBehaviour
         if (!isGrounded)
         {
             isJumping = true;
-            gravityVel += gravity * -player.up * Time.deltaTime;
+            gravityVel += gravity * -player.up * Runner.DeltaTime;
         }
         else
         {
@@ -133,7 +144,7 @@ public class PlayerController : NetworkBehaviour
 
         Vector3 velocity = temp * playerSpeed * sprintMultiplier * currentAccel;
 
-        rb_player.velocity = velocity + (gravityVel);
+        rb_player.velocity = velocity + (gravityVel) * Runner.DeltaTime;
     }
 
     private void Movement()
@@ -276,7 +287,7 @@ public class PlayerController : NetworkBehaviour
                 }
                 if (isJumping)
                 {
-                    rb_player.AddForce(rb_player.transform.up * jumpForce * Time.deltaTime, ForceMode.Acceleration);
+                    rb_player.AddForce(rb_player.transform.up * jumpForce * Runner.DeltaTime, ForceMode.Acceleration);
                     jumpTime += Time.deltaTime;
                 }
                 if (Input.GetKeyUp(KeyCode.Space) || jumpTime >= maxJumpTime)
