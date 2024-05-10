@@ -100569,7 +100569,7 @@ GameObject:
   - component: {fileID: 2040309191}
   - component: {fileID: 2040309192}
   m_Layer: 0
-  m_Name: Player Spawner
+  m_Name: Network Runner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

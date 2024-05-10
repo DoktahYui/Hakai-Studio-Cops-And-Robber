@@ -1,58 +1,18 @@
 using Fusion;
 using Fusion.Sockets;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
+public class PlayerInputManager : SimulationBehaviour, IBeforeUpdate, INetworkRunnerCallbacks
 {
-    private NetworkRunner networkRunner;
-    [SerializeField] private NetworkPrefabRef networkPrefabRef;
 
-    private Dictionary<PlayerRef, NetworkObject> spawnPlayer = new Dictionary<PlayerRef, NetworkObject>();
-
-    private async void GameStart(GameMode mode)
+    public void BeforeUpdate()
     {
-        networkRunner = gameObject.AddComponent<NetworkRunner>();
-        networkRunner.ProvideInput = true;
 
-        var scene = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
-        var sceneInfo = new NetworkSceneInfo();
-
-        if (scene.IsValid)
-        {
-            sceneInfo.AddSceneRef(scene, LoadSceneMode.Additive);
-        }
-
-        await networkRunner.StartGame(new StartGameArgs()
-        {
-            GameMode = mode,
-            SessionName = "TestMatchRoom",
-            Scene = scene,
-            SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
-        });
-
-        {
-
-        }
     }
-
-    private void OnGUI()
-    {
-        if (networkRunner == null)
-        {
-            if (GUI.Button(new Rect(0, 0, 200, 40), "Host"))
-            {
-                GameStart(GameMode.Host);
-            }
-            if (GUI.Button(new Rect(0, 40, 200, 40), "Join"))
-            {
-                GameStart(GameMode.Client);
-            }
-        }
-    }
-
 
     public void OnConnectedToServer(NetworkRunner runner)
     {
@@ -86,7 +46,12 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
+        var data = new NetworkInputData();
 
+        Gravity(data);
+        Movement(data);
+
+        input.Set(data);
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
@@ -96,7 +61,7 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
     {
-
+ 
     }
 
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
@@ -106,22 +71,12 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        if (networkRunner.IsServer)
-        {
-            Vector3 playerPos = new Vector3(0f, 10f, 0f);
 
-            NetworkObject networkObject = networkRunner.Spawn(networkPrefabRef, playerPos, Quaternion.identity, player);
-            spawnPlayer.Add(player, networkObject);
-        }
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        if (spawnPlayer.TryGetValue(player, out NetworkObject networkObject))
-        {
-            networkRunner.Despawn(networkObject);
-            spawnPlayer.Remove(player);
-        }
+
     }
 
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
@@ -157,5 +112,34 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
     {
 
+    }
+
+    public void Movement(NetworkInputData data)
+    {
+        float inputX = Input.GetAxisRaw("Horizontal");
+        float inputZ = Input.GetAxisRaw("Vertical");
+
+        data.temp = Vector3.zero;
+        if (inputZ > 0)
+        {
+            data.temp += Vector3.forward;
+        }
+        if (inputZ < 0)
+        {
+            data.temp += -Vector3.forward;
+        }
+        if (inputX > 0)
+        {
+            data.temp += Vector3.right;
+        }
+        if (inputX < 0)
+        {
+            data.temp += -Vector3.right;
+        }
+    }
+
+    public void Gravity(NetworkInputData data)
+    {
+        data.gravity = 25f;
     }
 }

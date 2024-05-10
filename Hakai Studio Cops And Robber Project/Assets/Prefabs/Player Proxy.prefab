@@ -422,11 +422,10 @@ GameObject:
   - component: {fileID: 1072361948798942471}
   - component: {fileID: 1639655143816721888}
   - component: {fileID: 5317757090255545604}
-  - component: {fileID: 1199942452274913333}
-  - component: {fileID: 2610704529838152261}
-  - component: {fileID: 4243569788374855452}
   - component: {fileID: 5152249170159269707}
   - component: {fileID: 3150727131192409305}
+  - component: {fileID: -687150875761939022}
+  - component: {fileID: 9207442374985718419}
   m_Layer: 0
   m_Name: Player Proxy
   m_TagString: Player
@@ -476,7 +475,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!136 &6021358559738375900
@@ -554,74 +553,9 @@ MonoBehaviour:
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
-  NetworkedBehaviours: []
---- !u!114 &1199942452274913333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1842110121854823886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2732728483
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
---- !u!114 &2610704529838152261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1842110121854823886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UseUnreliableDeltas: 0
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 0
-  SyncScaleY: 0
-  SyncScaleZ: 0
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  UseQuaternionSynchronization: 0
-  UseQuaternionCompression: 0
-  UseHalfFloatPrecision: 0
-  InLocalSpace: 0
-  Interpolate: 1
-  SlerpPosition: 0
---- !u!114 &4243569788374855452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1842110121854823886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98c27c274f8afbd44b84d09a45a3b24f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 7961407372992896706}
-  WeaponCamera: {fileID: 5933149846572478319}
-  audioListener: {fileID: 5152249170159269707}
+  NetworkedBehaviours:
+  - {fileID: 3150727131192409305}
+  - {fileID: -687150875761939022}
 --- !u!81 &5152249170159269707
 AudioListener:
   m_ObjectHideFlags: 0
@@ -659,15 +593,15 @@ MonoBehaviour:
   playerSpeed: 0
   diagonalSpeed: 7.071068
   jumpForce: 15
-  stepRayUpper: {fileID: 0}
-  stepRayLower: {fileID: 0}
+  stepRayUpper: {fileID: 9003055621771455426}
+  stepRayLower: {fileID: 838303905486385464}
   stepWidth: 1.2
   stepHeight: 0.6
   stepSmooth: 0.05
-  groundDectector: {fileID: 0}
+  groundDectector: {fileID: 3656180308810968848}
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   isGrounded: 0
   groundDelay: 0.2
   maxJumpTime: 0.2
@@ -681,6 +615,43 @@ MonoBehaviour:
   mouseSensitivity: 1
   teleportDelay: 1
   teleportCooldown: 0
+--- !u!114 &-687150875761939022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842110121854823886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
+--- !u!114 &9207442374985718419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842110121854823886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2343546331
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &2899883272102612426
 GameObject:
   m_ObjectHideFlags: 0
